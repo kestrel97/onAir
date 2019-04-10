@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "576362882987",
+    "firebase_url": "https://onair-ab0e2.firebaseio.com",
+    "project_id": "onair-ab0e2",
+    "storage_bucket": "onair-ab0e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:576362882987:android:dcf2c9ff02fbf39c",
+        "android_client_info": {
+          "package_name": "com.fastnuces.onair"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmo29O5Sp1fX3eoggi-RCY_sN9hI_PDnQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "576362882987-7lju5jruh1ao8r6nfbt7n0cbupjo7vcd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

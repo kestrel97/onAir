@@ -1,4 +1,4 @@
-package com.example.mobile;
+package com.fastnuces.onair;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
