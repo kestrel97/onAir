@@ -14,7 +14,8 @@ app.use(helmet());
 const cors = require('cors');
 app.use(cors());
 
-require('utils/db');
+// api routes
+app.use('/api/users', require('routes/user.route'));
 
 app.get('/', function (req, res) {
   res.send('Hello World!');

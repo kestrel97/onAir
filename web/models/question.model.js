@@ -5,15 +5,8 @@ const schema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     question: { type: String, required: true },
     location: {
-        type: {
-            type: String,
-            enum: ['Point'],
-            required: true
-        },
-        coordinates: {
-            type: [Number],
-            required: true
-        }
+        type: {type: String, default: 'Point'},
+        coordinates: {type: [Number], default: [0, 0]}
     }
 });
 
