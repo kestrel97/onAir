@@ -13,7 +13,7 @@ function register(req, res, next) {
 
 function update(req, res, next) {
     userService.update(req.body)
-        .then(() => res.json({}))
+        .then((result) => res.json(result))
         .catch(err => next(err));
 }
 

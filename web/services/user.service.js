@@ -34,9 +34,17 @@ async function update(userParam) {
         return ( { success: false, message: constants.USER_NOT_FOUND } )
     }
 
-    Object.assign(user, userParam);
+    userParam.location.type = "Point";
 
-    await user.save();
+    Object.assign(user, userParam);
+    
+    try {
+        await user.save();
+    } catch {
+        return ( { success: false, message: constants.USER_UPDATE_FAILED } )
+    }
+
+    return ( { success: true, message: constants.USER_UPDATED_SUCCESSFULLY } )
 }
 
 module.exports = {
