@@ -1,0 +1,29 @@
+service: onair
+
+custom:
+  secrets: ${file(secrets.json)}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${self:custom.secrets.NODE_ENV}
+  region: us-east-1
+  environment: 
+    NODE_ENV: ${self:custom.secrets.NODE_ENV}
+    MONGODB_STRING: ${self:custom.secrets.MONGODB_STRING}
+
+functions:
+  app:
+    handler: index.handler
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
+
+plugins:
+  - serverless-offline
