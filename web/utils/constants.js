@@ -5,5 +5,9 @@ module.exports = {
     USER_EMAIL_ALREADY_TAKEN: "An account already exists with this email.",
     USER_UPDATED_SUCCESSFULLY: "Updated successfully.",
     USER_UPDATE_FAILED: "Update failed.",
-    USER_NOT_FOUND: "User not found."
+    USER_NOT_FOUND: "User not found.",
+
+    // Quesiton Route
+    QUESTION_CREATION_FAILED: "Question creation failed.",
+    QUESTION_CREATED_SUCCESSFULLY: "Question created successfully."
 }
