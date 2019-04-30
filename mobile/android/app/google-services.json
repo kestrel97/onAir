@@ -13,7 +13,20 @@
           "package_name": "com.fastnuces.onair"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "576362882987-njql9aet5f3lnc8ejv18a3kl7ap5hf6f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fastnuces.onair",
+            "certificate_hash": "d4913df0f70cc491261958b3aa9c0f5ee8cdd8f2"
+          }
+        },
+        {
+          "client_id": "576362882987-7lju5jruh1ao8r6nfbt7n0cbupjo7vcd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBmo29O5Sp1fX3eoggi-RCY_sN9hI_PDnQ"
