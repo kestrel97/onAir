@@ -17,18 +17,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class MainScreenState extends State<MainScreen> {
-
-  var geolocator = Geolocator();
-  var locationOptions =
-    LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 30);
-  StreamSubscription<Position> positionStream;
-
-  @override
-  void initState() {
-    super.initState();
-    _setUpLocationStream();
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -104,15 +93,5 @@ class MainScreenState extends State<MainScreen> {
 
     Navigator.of(context).pushReplacement(
         CupertinoPageRoute(builder: (BuildContext context) => SignInPage()));
-  }
-
-  void _setUpLocationStream() {
-    positionStream = geolocator
-        .getPositionStream(locationOptions)
-        .listen((Position position) async {
-      print(position == null
-          ? 'Unknown'
-          : position.latitude.toString() + ', ' + position.longitude.toString());
-    });
   }
 }

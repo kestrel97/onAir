@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
+    sender: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     question: { type: Schema.Types.ObjectId, ref: 'Question', required: true },
     response: { type: String, required: true }
 });

@@ -1,3 +1,5 @@
+import 'package:OnAir/utils/functions.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'ui/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,6 +29,15 @@ class Splash extends StatelessWidget {
     } else {
       nextWidget = SignInPage();
     }
+
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      saveFcmToken(token);
+    });
   }
 
   Widget build(BuildContext context) {

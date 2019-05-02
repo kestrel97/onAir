@@ -1,3 +1,4 @@
+import 'package:OnAir/utils/functions.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,8 @@ class AskQuestionState extends State<AskQuestion> {
   void initState() {
     super.initState();
 
-    _getCurrentLocation().then((pos) {
-      mapController.move(pos, mapController.zoom);
+    getCurrentLocation().then((pos) {
+      mapController.move(PositionToLatLng(pos), mapController.zoom);
     });
   }
 
@@ -67,13 +68,6 @@ class AskQuestionState extends State<AskQuestion> {
             ),
           ),
         );
-  }
-
-  Future<LatLng> _getCurrentLocation() async {
-    print("inside function");
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    return LatLng(position.latitude, position.longitude);
   }
 
   void _handleTap(LatLng latlng) {

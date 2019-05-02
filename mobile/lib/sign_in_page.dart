@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'main_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'utils/constants.dart';
 import 'utils/functions.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -29,7 +27,6 @@ class SignInPageState extends State<SignInPage> {
               textColor: Theme.of(context).buttonColor,
               onPressed: () async {
                 final FirebaseUser user = await _auth.currentUser();
-                print(user);
                 if (user == null) {
                   Scaffold.of(context).showSnackBar(SnackBar(
                     content: const Text('No one has signed in.'),
@@ -125,7 +122,8 @@ class _GoogleSignInSectionState extends State<_GoogleSignInSection> {
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
 
-    if (user != null) await postGmailAuthentication(user);
+    if (user != null)
+      await postAuthentication(user.providerData[0].displayName, user.uid, user.providerData[0].email);
 
     setState(() {
       if (user != null) {
@@ -149,8 +147,8 @@ class _PhoneSignInSection extends StatefulWidget {
 }
 
 class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
-  final TextEditingController _phoneNumberController = TextEditingController();
-  final TextEditingController _smsController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController(text: "+923322218872");
+  final TextEditingController _smsController = TextEditingController(text: "112233");
 
   String _message = '';
   String _verificationId;
@@ -218,7 +216,8 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
     });
     final PhoneVerificationCompleted verificationCompleted =
         (FirebaseUser user) async {
-      await postPhoneAuthentication(user);
+      await postAuthentication("", user.uid, user.providerData[0].phoneNumber);
+
       setState(() {
         _message = 'signInWithPhoneNumber auto succeeded: $user';
       });
@@ -265,11 +264,10 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
     );
     final FirebaseUser user = await _auth.signInWithCredential(credential);
     final FirebaseUser currentUser = await _auth.currentUser();
-    print(currentUser);
     assert(user.uid == currentUser.uid);
 
     if (user != null) {
-      await postPhoneAuthentication(user);
+      await postAuthentication("", user.uid, user.providerData[0].phoneNumber);
     }
 
     setState(() {
