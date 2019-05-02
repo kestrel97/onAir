@@ -1,10 +1,15 @@
+import 'dart:async';
+
+import 'package:OnAir/question.dart';
 import 'package:OnAir/sign_in_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'invite_contacts.dart';
+import 'utils/constants.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -12,6 +17,18 @@ class MainScreen extends StatefulWidget {
 }
 
 class MainScreenState extends State<MainScreen> {
+
+  var geolocator = Geolocator();
+  var locationOptions =
+    LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 30);
+  StreamSubscription<Position> positionStream;
+
+  @override
+  void initState() {
+    super.initState();
+    _setUpLocationStream();
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -21,8 +38,22 @@ class MainScreenState extends State<MainScreen> {
         children: <Widget>[
           UserAccountsDrawerHeader(
             decoration: BoxDecoration(color: Colors.blue),
-            accountName: new Text("Saad Ismail"),
-            accountEmail: new Text("saad3112@gmail.com"),
+            accountName: FutureBuilder<String>(
+                future: getStringFromSharedPreferences(KEY_USER_NAME),
+                initialData: '',
+                builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  return snapshot.hasData
+                      ? new Text(snapshot.data)
+                      : Container();
+                }),
+            accountEmail: FutureBuilder<String>(
+                future: getStringFromSharedPreferences(KEY_IDENTIFIER),
+                initialData: '',
+                builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  return snapshot.hasData
+                      ? new Text(snapshot.data)
+                      : Container();
+                }),
             currentAccountPicture: Icon(
               Icons.account_circle,
               size: 70.0,
@@ -34,6 +65,13 @@ class MainScreenState extends State<MainScreen> {
             onTap: () {
               Navigator.of(context).push(
                   CupertinoPageRoute(builder: (BuildContext context) => InviteContacts()));
+            },
+          ),
+          ListTile(
+            title: Text('Ask question'),
+            onTap: () {
+              Navigator.of(context).push(
+                  CupertinoPageRoute(builder: (BuildContext context) => AskQuestion()));
             },
           ),
           ListTile(
@@ -52,23 +90,29 @@ class MainScreenState extends State<MainScreen> {
     );
   }
 
+  Future<String> getStringFromSharedPreferences(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.getString(key);
+  }
+
   void _signOut() async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     final GoogleSignIn _googleSignIn = new GoogleSignIn();
 
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-//    final FirebaseUser user = await _auth.signInWithCredential(credential);
-
+    await _auth.signOut();
     _googleSignIn.signOut();
 
     Navigator.of(context).pushReplacement(
         CupertinoPageRoute(builder: (BuildContext context) => SignInPage()));
+  }
+
+  void _setUpLocationStream() {
+    positionStream = geolocator
+        .getPositionStream(locationOptions)
+        .listen((Position position) async {
+      print(position == null
+          ? 'Unknown'
+          : position.latitude.toString() + ', ' + position.longitude.toString());
+    });
   }
 }

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'main_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'utils/constants.dart';
+import 'utils/functions.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -26,6 +29,7 @@ class SignInPageState extends State<SignInPage> {
               textColor: Theme.of(context).buttonColor,
               onPressed: () async {
                 final FirebaseUser user = await _auth.currentUser();
+                print(user);
                 if (user == null) {
                   Scaffold.of(context).showSnackBar(SnackBar(
                     content: const Text('No one has signed in.'),
@@ -119,8 +123,10 @@ class _GoogleSignInSectionState extends State<_GoogleSignInSection> {
     assert(await user.getIdToken() != null);
 
     final FirebaseUser currentUser = await _auth.currentUser();
-    print(currentUser);
     assert(user.uid == currentUser.uid);
+
+    if (user != null) await postGmailAuthentication(user);
+
     setState(() {
       if (user != null) {
         _success = true;
@@ -211,10 +217,13 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
       _message = '';
     });
     final PhoneVerificationCompleted verificationCompleted =
-        (FirebaseUser user) {
+        (FirebaseUser user) async {
+      await postPhoneAuthentication(user);
       setState(() {
         _message = 'signInWithPhoneNumber auto succeeded: $user';
       });
+      Navigator.of(context).pushReplacement(
+          CupertinoPageRoute(builder: (BuildContext context) => MainScreen()));
     };
 
     final PhoneVerificationFailed verificationFailed =
@@ -256,7 +265,13 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
     );
     final FirebaseUser user = await _auth.signInWithCredential(credential);
     final FirebaseUser currentUser = await _auth.currentUser();
+    print(currentUser);
     assert(user.uid == currentUser.uid);
+
+    if (user != null) {
+      await postPhoneAuthentication(user);
+    }
+
     setState(() {
       if (user != null) {
         _message = 'Successfully signed in, uid: ' + user.uid;
@@ -264,5 +279,8 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
         _message = 'Sign in failed';
       }
     });
+
+    Navigator.of(context).pushReplacement(
+        CupertinoPageRoute(builder: (BuildContext context) => MainScreen()));
   }
 }

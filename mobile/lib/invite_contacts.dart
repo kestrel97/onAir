@@ -73,7 +73,7 @@ class _InviteScreenState extends State<InviteScreen> {
     return new Scaffold(
       appBar: (_isSelectedContactsView) ? 
         new AppBar(
-          title: new Text(widget.title),
+          title: new Text("Send SMS"),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.send),
@@ -82,7 +82,7 @@ class _InviteScreenState extends State<InviteScreen> {
               },
             )
           ]
-        ) : new AppBar(title: new Text(widget.title)),
+        ) : new AppBar(title: new Text("Invite Contacts")),
       body: !_isLoading
           ? Container(
               child: ListView.builder(
