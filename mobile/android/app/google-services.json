@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "576362882987-dluj9h872l1k61ps72n34a61imf9cv9g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fastnuces.onair",
+            "certificate_hash": "b8fee669cee9f6499ef92491fa55ba34a52b9640"
+          }
+        },
+        {
           "client_id": "576362882987-ff6je3pi31m5b2a0g5c3vmi7rig92tab.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
