@@ -6,7 +6,7 @@ const schema = new Schema({
     question: { type: String, required: true },
     location: {
         type: {type: String, default: 'Point'},
-        coordinates: {type: [Number], default: [0, 0]}
+        coordinates: { type: [Number], required: true }
     }
 });
 
