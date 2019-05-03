@@ -3,8 +3,8 @@ const db = require('utils/db');
 const Question = db.Question;
 
 async function create(userParam) {
-    if (! userParam.email) {
-        return ( { success: false, message: constants.QUESTION_CREATION_FAILED } )
+    if (userParam.location == undefined || userParam.location.coordinates == undefined) {
+        return ( { success: false, message: constants.QUESTION_CREATION_FAILED } );
     }
 
     const question = new Question(userParam);

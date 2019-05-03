@@ -17,6 +17,7 @@
     "helmet": "^3.16.0",
     "mongoose": "^5.5.4",
     "rootpath": "^0.1.2",
+    "serverless-azure-functions": "^0.7.0",
     "serverless-http": "^2.0.1"
   },
   "devDependencies": {
