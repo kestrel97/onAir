@@ -1,134 +1,58 @@
-import 'lesson.dart';
+import 'package:OnAir/utils/functions.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'Detailpage.dart';
+import 'ui/splash_screen.dart';
+import 'package:flutter/cupertino.dart';
+import 'sign_in_page.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'main_screen.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(new Splash());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
+class Splash extends StatelessWidget {
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Widget nextWidget;
+
+  Widget afterSplash(BuildContext context) {
+    Navigator.of(context).pushReplacement(
+        CupertinoPageRoute(builder: (BuildContext context) => nextWidget));
+  }
+
+  void duringSplash() async {
+    final bool isLoggedIn = await _googleSignIn.isSignedIn();
+
+    if (isLoggedIn != null && isLoggedIn) {
+      nextWidget = MainScreen();
+    } else {
+      nextWidget = SignInPage();
+    }
+
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      saveFcmToken(token);
+    });
+  }
+
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     return new MaterialApp(
-      title: 'Flutter Demo',
+      title: 'On Air',
       theme: new ThemeData(
-          primaryColor: Color.fromRGBO(58, 66, 86, 1.0), fontFamily: 'Raleway'),
-      home: new ListPage(title: 'Lessons'),
-      // home: DetailPage(),
-    );
-  }
-}
-
-class ListPage extends StatefulWidget {
-  ListPage({Key key, this.title}) : super(key: key);
-
-  String title;
-
-  @override
-  _ListPageState createState() => _ListPageState();
-}
-
-class _ListPageState extends State<ListPage> {
-  List lessons;
-
-  @override
-  void initState() {
-    lessons = getLessons();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    ListTile makeListTile(Lesson lesson) => ListTile(
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-
-          title: Text(
-            lesson.title,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
-
-          trailing:
-              Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => DetailPage(lesson: lesson)));
-          },
-        );
-
-    Card makeCard(Lesson lesson) => Card(
-          elevation: 8.0,
-          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-          child: Container(
-            decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
-            child: makeListTile(lesson),
-          ),
-        );
-
-    final makeBody = Container(
-      // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 1.0)),
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: lessons.length,
-        itemBuilder: (BuildContext context, int index) {
-          return makeCard(lessons[index]);
-        },
+        primarySwatch: Colors.blue,
       ),
-    );
-
-    final topAppBar = AppBar(
-      elevation: 0.1,
-      backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
-      title: Text(widget.title),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.list),
-          onPressed: () {},
-        )
-      ],
-    );
-
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
-      appBar: topAppBar,
-      body: makeBody,
+      home: SplashScreen(
+          imagePath: 'assets/onair.jpg',
+          afterSplash: afterSplash,
+          duringSplash: duringSplash,
+          duration: 2500),
     );
   }
-}
-
-List getLessons() {
-  return [
-    Lesson(
-        title:
-            "ghjdsgjgfvjdshkjghkdshgkdsghkdfhglkhkdhfghdfkhgkjdfhgkbhdfkhgkdfhkghjdsgjgfvjdshkjghkdshgkdsghkdfhglkhkdhfghdfkhgkjdfhgkbhdfkhgkdfhk",
-        content:
-            "Start by taking a couple of minutes to ad the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
-    Lesson(
-        title: "Observation at Junctions",
-        content:
-            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
-    Lesson(
-        title: "Reverse parallel Parking",
-        content:
-            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
-    Lesson(
-        title: "Reversing around the corner",
-        content:
-            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
-    Lesson(
-        title: "Incorrect Use of Signal",
-        content:
-            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
-    Lesson(
-        title: "Engine Challenges",
-        content:
-            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
-    Lesson(
-        title: "Self Driving Car",
-        content:
-            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed.  ")
-  ];
 }
