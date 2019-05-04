@@ -1,58 +1,34 @@
 import 'package:OnAir/utils/functions.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'Detailpage.dart';
-import 'models/question.dart';
-void main() => runApp(new MyApp());
+import 'ui/splash_screen.dart';
+import 'package:flutter/cupertino.dart';
+import 'sign_in_page.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'main_screen.dart';
+import 'package:flutter/services.dart';
 
-class MyApp extends StatelessWidget {
-  
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Flutter Demo',
-      theme: new ThemeData(
-          primaryColor: Color.fromRGBO(58, 66, 86, 1.0), fontFamily: 'Raleway'),
-      home: new ListPage(title: 'Lessons'),
-      // home: DetailPage(),
-    );
-  }
-}
+void main() => runApp(new Splash());
 
-class ListPage extends StatefulWidget {
-  
+class Splash extends StatelessWidget {
 
-  ListPage({Key key, this.title}) : super(key: key);
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Widget nextWidget;
 
-  @override
-  _ListPageState createState() => _ListPageState();
-}
-
-class _ListPageState extends State<ListPage> {
-  Question question= Question(question: "hello world");
-  List lessons;
-
-  @override
-  void initState() {
-    lessons = getLessons();
-    super.initState();
+  Widget afterSplash(BuildContext context) {
+    Navigator.of(context).pushReplacement(
+        CupertinoPageRoute(builder: (BuildContext context) => nextWidget));
   }
 
   void duringSplash() async {
     final bool isLoggedIn = await _googleSignIn.isSignedIn();
 
-          trailing:
-              Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => DetailPage(question:question)));
-          },
-        );
+    if (isLoggedIn != null && isLoggedIn) {
+      nextWidget = MainScreen();
+    } else {
+      nextWidget = SignInPage();
+    }
 
     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
     _firebaseMessaging.requestNotificationPermissions(
