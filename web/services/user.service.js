@@ -2,33 +2,13 @@ const constants = require('utils/constants');
 const db = require('utils/db');
 const User = db.User;
 
-// async function create(userParam) {
-
-//     if (! userParam.location || ! userParam.location.coordinates) {
-//         return ( { success: false, message: constants.USER_REGISTRATION_FAILED } )
-//     }
-
-//     if (await User.findOne({ email: userParam.email })) {
-//         return ( { success: false, message: constants.USER_EMAIL_ALREADY_TAKEN } )
-//     }
-
-//     const user = new User(userParam);
-
-//     try {
-//         await user.save();
-//     } catch {
-//         return ( { success: false, message: constants.USER_REGISTRATION_FAILED } )
-//     }
-
-//     return ( { success: true, message: constants.USER_REGISTERED_SUCCESSFULLY } )
-// }
-
 async function update(userParam) {
 
     if (! userParam.uid) {
         return ( { success: false, message: constants.USER_UPDATE_FAILED } )
     }
 
+    userParam._id = userParam.uid;
     const user = await User.findOne({ uid: userParam.uid });
 
     userParam.location.type = "Point";
@@ -57,6 +37,5 @@ async function update(userParam) {
 }
 
 module.exports = {
-    // create,
     update
 };

@@ -1,3 +1,4 @@
+import 'package:OnAir/models/question.dart';
 import 'package:OnAir/models/user.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
@@ -35,6 +36,11 @@ void saveFirebaseUser(String name, String uid, String identifier) async {
     prefs.setString(KEY_USER_NAME, name);
 }
 
+Future<String> getUid() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString(KEY_FIREBASE_UID);
+}
+
 void updateUser(User user) async {
   const String endPoint = BASE_END_POINT + "/api/users/update";
   var response = await Dio().post(endPoint, data: user.toJson());
@@ -48,4 +54,17 @@ void saveFcmToken(String fcm_token) async {
 Future<String> readFcmToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getString(KEY_FCM_TOKEN);
+}
+
+Future<String> getLocality(LatLng latlng) async {
+  List<Placemark> placemark = await Geolocator().placemarkFromPosition(await LatLngToPosition(latlng));
+  return placemark.first.name + " " + placemark.first.locality + " " + placemark.first.subLocality + " " + placemark.first.subAdministrativeArea;
+}
+
+void submitQuestion(String question, LatLng location) async {
+  String uid = await getUid();
+  Question questionObj = Question(user: uid, location: location, question: question);
+  print(questionObj.toJson());
+  var response = await Dio().post(BASE_END_POINT + "/api/questions/create", data: questionObj.toJson());
+  print(response.data);
 }
