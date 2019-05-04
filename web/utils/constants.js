@@ -7,7 +7,11 @@ module.exports = {
     USER_UPDATE_FAILED: "Update failed.",
     USER_NOT_FOUND: "User not found.",
 
-    // Quesiton Route
+    // Question Route
     QUESTION_CREATION_FAILED: "Question creation failed.",
-    QUESTION_CREATED_SUCCESSFULLY: "Question created successfully."
+    QUESTION_CREATED_SUCCESSFULLY: "Question created successfully.",
+
+    // Response Route
+    RESPONSE_CREATION_FAILED: "Response creation failed.",
+    RESPONSE_CREATED_SUCCESSFULLY: "Response created successfully."
 }

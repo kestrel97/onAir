@@ -2,6 +2,9 @@ service: onair
 
 custom:
   secrets: ${file(secrets.json)}
+  apigwBinary:
+    types:
+      - '*/*' 
 
 provider:
   name: azure
