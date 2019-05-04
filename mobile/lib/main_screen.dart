@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:OnAir/question.dart';
+import 'package:OnAir/ask_question.dart';
 import 'package:OnAir/questions_list.dart';
 import 'package:OnAir/sign_in_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';

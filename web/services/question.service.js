@@ -18,6 +18,11 @@ async function create(userParam) {
     return ( { success: true, message: constants.QUESTION_CREATED_SUCCESSFULLY } )
 }
 
+async function getByUserId(uid) {
+    return Question.find({ user: uid });
+}
+
 module.exports = {
-    create
+    create,
+    getByUserId
 };

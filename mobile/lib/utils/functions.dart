@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:OnAir/models/question.dart';
 import 'package:OnAir/models/user.dart';
 import 'package:geolocator/geolocator.dart';
@@ -61,8 +63,16 @@ Future<String> getLocality(LatLng latlng) async {
   return placemark.first.name + " " + placemark.first.locality + " " + placemark.first.subLocality + " " + placemark.first.subAdministrativeArea;
 }
 
-void submitQuestion(String question, LatLng location) async {
+Future<Response> submitQuestion(String question, LatLng location) async {
   String uid = await getUid();
   Question questionObj = Question(user: uid, location: location, question: question);
-  var response = await Dio().post(BASE_END_POINT + "/api/questions/create", data: questionObj.toJson());
+  return await Dio().post(BASE_END_POINT + "/api/questions/create", data: questionObj.toJson());
+}
+
+Future<List<Question>> getQuestionsByUserId() async {
+  String uid = await getUid();
+  var response = await Dio().get(BASE_END_POINT + "/api/questions/byUid/" + uid);
+  List<dynamic> list = response.data;
+  List<Question> questions = list.map((model)=> Question.fromJson(model)).toList();
+  return questions;
 }
