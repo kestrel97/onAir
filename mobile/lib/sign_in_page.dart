@@ -104,6 +104,12 @@ class _GoogleSignInSectionState extends State<_GoogleSignInSection> {
     );
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   // Example code of how to sign in with google.
   void _signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();

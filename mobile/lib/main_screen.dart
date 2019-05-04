@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:OnAir/question.dart';
+import 'package:OnAir/questions_list.dart';
 import 'package:OnAir/sign_in_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -49,7 +50,7 @@ class MainScreenState extends State<MainScreen> {
             ),
           ),
           ListTile(
-            title: Text('Invite Contacts'),
+            title: Text('Invite contacts'),
             onTap: () {
               Navigator.of(context).push(
                   CupertinoPageRoute(builder: (BuildContext context) => InviteContacts()));
@@ -60,6 +61,20 @@ class MainScreenState extends State<MainScreen> {
             onTap: () {
               Navigator.of(context).push(
                   CupertinoPageRoute(builder: (BuildContext context) => AskQuestion()));
+            },
+          ),
+          ListTile(
+            title: Text('My questions'),
+            onTap: () {
+              Navigator.of(context).push(
+                  CupertinoPageRoute(builder: (BuildContext context) => QuestionsList(title: "My questions", my_questions: true)));
+            },
+          ),
+          ListTile(
+            title: Text('My requests'),
+            onTap: () {
+              Navigator.of(context).push(
+                  CupertinoPageRoute(builder: (BuildContext context) => QuestionsList(title: "My requests", my_questions: false)));
             },
           ),
           ListTile(

@@ -64,7 +64,5 @@ Future<String> getLocality(LatLng latlng) async {
 void submitQuestion(String question, LatLng location) async {
   String uid = await getUid();
   Question questionObj = Question(user: uid, location: location, question: question);
-  print(questionObj.toJson());
   var response = await Dio().post(BASE_END_POINT + "/api/questions/create", data: questionObj.toJson());
-  print(response.data);
 }

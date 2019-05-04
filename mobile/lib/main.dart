@@ -13,7 +13,6 @@ void main() => runApp(new Splash());
 class Splash extends StatelessWidget {
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
   Widget nextWidget;
 
   Widget afterSplash(BuildContext context) {
@@ -52,7 +51,7 @@ class Splash extends StatelessWidget {
           imagePath: 'assets/onair.jpg',
           afterSplash: afterSplash,
           duringSplash: duringSplash,
-          duration: 2500),
+          duration: 500),
     );
   }
 }
