@@ -3,18 +3,22 @@ import 'package:OnAir/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'question_details.dart';
 import 'models/question.dart';
-
+import 'Requestdetail.dart';
 class QuestionsList extends StatefulWidget {
   QuestionsList({Key key, this.title, this.my_questions}) : super(key: key);
 
   final String title;
-  final bool my_questions;
+  bool my_questions;
 
   @override
-  _QuestionsListState createState() => _QuestionsListState();
+  _QuestionsListState createState() => _QuestionsListState(my_questions: my_questions);
 }
 
 class _QuestionsListState extends State<QuestionsList> {
+  bool my_questions;
+
+  _QuestionsListState({this.my_questions});
+
   @override
   void initState() {
     super.initState();
@@ -40,7 +44,7 @@ class _QuestionsListState extends State<QuestionsList> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => QuestionDetails(question: question)));
+                    builder: (context) => (my_questions) ? QuestionDetails(question: question) : RequestDetail(question: question) ));
           },
         );
 
@@ -58,7 +62,7 @@ class _QuestionsListState extends State<QuestionsList> {
           title: Text(widget.title),
         ),
         body: FutureBuilder(
-            future: getQuestionsByUserId(),
+            future: (my_questions) ? getQuestionsByUserId() : getQuestionsByUserId(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<Question> questions = snapshot.data;

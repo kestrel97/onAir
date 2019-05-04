@@ -32,6 +32,7 @@ class QuestionDetails extends StatelessWidget {
                 child: new ListTile(
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  
                   title: Text(
                     question.question,
                     style: TextStyle(
