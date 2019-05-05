@@ -1,6 +1,8 @@
 import 'package:OnAir/utils/functions.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'ui/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'sign_in_page.dart';
@@ -37,6 +39,8 @@ class Splash extends StatelessWidget {
       assert(token != null);
       saveFcmToken(token);
     });
+
+    await PermissionHandler().requestPermissions([PermissionGroup.camera, PermissionGroup.contacts, PermissionGroup.location, PermissionGroup.sms]);
   }
 
   Widget build(BuildContext context) {

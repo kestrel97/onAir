@@ -25,8 +25,10 @@ const upload = multer({
     }
   }),
   fileFilter: function (req, file, callback) {
+    console.log(file.mimetype);
     var ext = mime.getExtension(file.mimetype);
-    if(ext !== 'png' && ext !== 'jpg' && ext !== 'gif' && ext !== 'jpeg') {
+    console.log(ext);
+    if(ext !== 'png' && ext !== 'jpg' && ext !== 'gif' && ext !== 'jpeg' && ext !== 'bin') {
         return callback(new Error('Only images are allowed'))
     }
     callback(null, true)

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:OnAir/models/response.dart';
 import 'package:OnAir/models/question.dart';
 import 'package:OnAir/models/user.dart';
 import 'package:geolocator/geolocator.dart';
@@ -75,4 +76,15 @@ Future<List<Question>> getQuestionsByUserId() async {
   List<dynamic> list = response.data;
   List<Question> questions = list.map((model)=> Question.fromJson(model)).toList();
   return questions;
+}
+
+Future<QuestionResponse> getResponseByQuestionId(question_id) async {
+  print(BASE_END_POINT + "/api/responses/byQuestionId/" + question_id);
+  var response;
+  try {
+    response = await Dio().get(BASE_END_POINT + "/api/responses/byQuestionId/" + question_id);
+  } on DioError catch(e) {
+    return new QuestionResponse();
+  }
+  return QuestionResponse.fromJson(response.data);
 }

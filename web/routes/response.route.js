@@ -9,11 +9,20 @@ router.get('/byQuestionId/:id', getByQuestionId);
 
 router.post('/create', function(req, res) {
     singleUpload(req, res, function(err, some) {
+        console.log(req.body);
         if (err) {
+            console.log(err);
             return res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}] });
         }
+        
+        console.log(req.file);
 
-        req.body.image_link = req.file.location;
+
+        if (req.file != undefined && req.file.location != undefined) {
+            req.body.image_link = req.file.location;
+        } else {
+            return res.status(422).send({errors: [{title: 'Image Upload Error'}] });
+        }
 
         responseService.create(req.body)
             .then((result) => res.json(result))

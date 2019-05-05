@@ -16,7 +16,7 @@ async function create(responseParams) {
 }
 
 async function getByQuestionId(question_id) {
-    return Response.find({ question: question_id });
+    return Response.findOne({ question: question_id });
 }
 
 module.exports = {

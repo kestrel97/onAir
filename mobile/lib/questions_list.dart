@@ -3,7 +3,7 @@ import 'package:OnAir/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'question_details.dart';
 import 'models/question.dart';
-import 'Requestdetail.dart';
+import 'request_details.dart';
 class QuestionsList extends StatefulWidget {
   QuestionsList({Key key, this.title, this.my_questions}) : super(key: key);
 
@@ -44,7 +44,7 @@ class _QuestionsListState extends State<QuestionsList> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => (my_questions) ? QuestionDetails(question: question) : RequestDetail(question: question) ));
+                    builder: (context) => (my_questions) ? QuestionDetails(question: question) : RequestDetails(question: question) ));
           },
         );
 
