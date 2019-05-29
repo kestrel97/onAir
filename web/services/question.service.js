@@ -50,7 +50,17 @@ async function getByUserId(uid) {
     return Question.find({ user: uid });
 }
 
+async function getRecentQuestions(offset) {
+    return Question.find().select('_id question').sort({ '_id': -1 }).skip(offset * 1).limit(10);
+}
+
+async function getQuestionCount() {
+    return Question.count();
+}
+
 module.exports = {
     create,
-    getByUserId
+    getByUserId,
+    getRecentQuestions,
+    getQuestionCount
 };

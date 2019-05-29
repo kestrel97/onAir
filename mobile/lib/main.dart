@@ -13,7 +13,6 @@ import 'package:flutter/services.dart';
 void main() => runApp(new Splash());
 
 class Splash extends StatelessWidget {
-
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   Widget nextWidget;
 
@@ -40,7 +39,12 @@ class Splash extends StatelessWidget {
       saveFcmToken(token);
     });
 
-    await PermissionHandler().requestPermissions([PermissionGroup.camera, PermissionGroup.contacts, PermissionGroup.location, PermissionGroup.sms]);
+    await PermissionHandler().requestPermissions([
+      PermissionGroup.camera,
+      PermissionGroup.contacts,
+      PermissionGroup.location,
+      PermissionGroup.sms
+    ]);
   }
 
   Widget build(BuildContext context) {

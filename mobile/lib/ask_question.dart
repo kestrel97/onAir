@@ -48,18 +48,17 @@ class AskQuestionState extends State<AskQuestion> {
         padding: const EdgeInsets.all(8.0),
         child: (_isLoading)
             ? AlertDialog(
-            title: new Text("Submitting"),
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Wrap(
+                title: new Text("Submitting"),
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    new CircularProgressIndicator(),
+                    Wrap(
+                      children: <Widget>[
+                        new CircularProgressIndicator(),
+                      ],
+                    ),
                   ],
-                ),
-              ],
-            )
-        )
+                ))
             : (_isLocationSelected)
                 ? Column(
                     children: <Widget>[

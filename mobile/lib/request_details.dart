@@ -52,7 +52,6 @@ class RequestDetailsState extends State<RequestDetails> {
   }
 
   uploadFileFromDio(BuildContext context) async {
-    print("HERERERE");
     setState(() {
       _isLoading = true;
     });
@@ -61,13 +60,9 @@ class RequestDetailsState extends State<RequestDetails> {
     formData.add("sender", await getUid());
     formData.add("response", _responseController.text);
 
-    if (_image != null &&
-        _image.path != null &&
-        _image.path.isNotEmpty) {
+    if (_image != null && _image.path != null && _image.path.isNotEmpty) {
       // Create a FormData
       String fileName = basename(_image.path);
-      print("File Name : $fileName");
-      print("File Size : ${_image.lengthSync()}");
       formData.add("image", new UploadFileInfo(_image, fileName));
     }
 
@@ -77,8 +72,6 @@ class RequestDetailsState extends State<RequestDetails> {
             method: 'POST',
             responseType: ResponseType.plain // or ResponseType.JSON
             ));
-    print("Response status: ${response.statusCode}");
-    print("Response data: ${response.data}");
     setState(() {
       _isLoading = false;
     });
@@ -94,92 +87,95 @@ class RequestDetailsState extends State<RequestDetails> {
         padding: const EdgeInsets.all(8.0),
         child: Container(
           padding: EdgeInsets.only(top: 8.0),
-          child: (_isLoading) ? AlertDialog(
-              title: new Text("Fetching"),
-              content: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Wrap(
+          child: (_isLoading)
+              ? AlertDialog(
+                  title: new Text("Fetching"),
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new CircularProgressIndicator(),
-                    ],
-                  ),
-                ],
-              )
-          ): Center(
-            child: ListView(
-              children: <Widget>[
-                new Card(
-                  elevation: 8.0,
-                  margin:
-                      new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-                  child: Container(
-                    decoration: BoxDecoration(color: Color(0xFF0069C0)),
-                    child: new ListTile(
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10.0),
-                      title: Text(
-                        question.question,
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                      Wrap(
+                        children: <Widget>[
+                          new CircularProgressIndicator(),
+                        ],
                       ),
-                    ),
-                  ),
-                ),
-                new Card(
-                  elevation: 8.0,
-                  margin:
-                      new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-                  child: Container(
-                    decoration: BoxDecoration(color: Color(0xFF0069C0)),
-                    child: Column(children: <Widget>[
-                      new ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        title: new TextFormField(
-                          controller: _responseController,
-                          decoration: new InputDecoration(
-                              hintText: "Write your response here",
-                              border: new OutlineInputBorder(
-                                borderSide: new BorderSide(),
-                              )),
-                          maxLines: null,
-                          minLines: 5,
-                          style: new TextStyle(
-                              fontSize: 16.0, color: Colors.black),
+                    ],
+                  ))
+              : Center(
+                  child: ListView(
+                    children: <Widget>[
+                      new Card(
+                        elevation: 8.0,
+                        margin: new EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 6.0),
+                        child: Container(
+                          decoration: BoxDecoration(color: Color(0xFF0069C0)),
+                          child: new ListTile(
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 10.0),
+                            title: Text(
+                              question.question,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ),
                       ),
-                      (_image == null)
-                          ? Column(
-                              children: <Widget>[
-                                RaisedButton(
-                                  onPressed: getImageByCamera,
-                                  child: new Text('Capture Image'),
-                                ),
-                                RaisedButton(
-                                  onPressed: getImageByGallery,
-                                  child: new Text('Select Image'),
-                                )
-                              ],
-                            )
-                          : Column(
-                              children: <Widget>[
-                                RaisedButton(
-                                  onPressed: clearImage,
-                                  child: new Text('Deselect Image'),
-                                ),
-                                RaisedButton(
-                                  onPressed: () => uploadFileFromDio(context),
-                                  child: new Text('Submit response'),
-                                )
-                              ],
-                            )
-                    ]),
+                      new Card(
+                        elevation: 8.0,
+                        margin: new EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 6.0),
+                        child: Container(
+                          decoration: BoxDecoration(color: Color(0xFF0069C0)),
+                          child: Column(children: <Widget>[
+                            new ListTile(
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 10.0),
+                              title: new TextFormField(
+                                controller: _responseController,
+                                decoration: new InputDecoration(
+                                    hintText: "Write your response here",
+                                    border: new OutlineInputBorder(
+                                      borderSide: new BorderSide(),
+                                    )),
+                                maxLines: null,
+                                minLines: 5,
+                                style: new TextStyle(
+                                    fontSize: 16.0, color: Colors.black),
+                              ),
+                            ),
+                            (_image == null)
+                                ? Column(
+                                    children: <Widget>[
+                                      RaisedButton(
+                                        onPressed: getImageByCamera,
+                                        child: new Text('Capture Image'),
+                                      ),
+                                      RaisedButton(
+                                        onPressed: getImageByGallery,
+                                        child: new Text('Select Image'),
+                                      )
+                                    ],
+                                  )
+                                : Column(
+                                    children: <Widget>[
+                                      RaisedButton(
+                                        onPressed: clearImage,
+                                        child: new Text('Deselect Image'),
+                                      ),
+                                      RaisedButton(
+                                        onPressed: () =>
+                                            uploadFileFromDio(context),
+                                        child: new Text('Submit response'),
+                                      )
+                                    ],
+                                  )
+                          ]),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
         ),
       ),
     );

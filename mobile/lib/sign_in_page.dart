@@ -129,14 +129,15 @@ class _GoogleSignInSectionState extends State<_GoogleSignInSection> {
     assert(user.uid == currentUser.uid);
 
     if (user != null)
-      await postAuthentication(user.providerData[0].displayName, user.uid, user.providerData[0].email);
+      await postAuthentication(user.providerData[0].displayName, user.uid,
+          user.providerData[0].email);
 
     setState(() {
       if (user != null) {
         _success = true;
         _userID = user.uid;
-        Navigator.of(context).pushReplacement(
-            CupertinoPageRoute(builder: (BuildContext context) => MainScreen()));
+        Navigator.of(context).pushReplacement(CupertinoPageRoute(
+            builder: (BuildContext context) => MainScreen()));
       } else {
         _success = false;
       }
@@ -153,8 +154,10 @@ class _PhoneSignInSection extends StatefulWidget {
 }
 
 class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
-  final TextEditingController _phoneNumberController = TextEditingController(text: "+923322218872");
-  final TextEditingController _smsController = TextEditingController(text: "112233");
+  final TextEditingController _phoneNumberController =
+      TextEditingController(text: "+923322218872");
+  final TextEditingController _smsController =
+      TextEditingController(text: "112233");
 
   String _message = '';
   String _verificationId;

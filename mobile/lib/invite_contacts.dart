@@ -55,7 +55,8 @@ class _InviteScreenState extends State<InviteScreen> {
           context: context,
           builder: (context) => AlertDialog(
                 title: const Text('Oops!'),
-                content: const Text('Looks like permission to read contacts is not granted.'),
+                content: const Text(
+                    'Looks like permission to read contacts is not granted.'),
                 actions: <Widget>[
                   FlatButton(
                     child: const Text('OK'),
@@ -71,18 +72,16 @@ class _InviteScreenState extends State<InviteScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: (_isSelectedContactsView) ? 
-        new AppBar(
-          title: new Text("Send SMS"),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.send),
-              onPressed: () {
-                _sendSms();
-              },
-            )
-          ]
-        ) : new AppBar(title: new Text("Invite Contacts")),
+      appBar: (_isSelectedContactsView)
+          ? new AppBar(title: new Text("Send SMS"), actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.send),
+                onPressed: () {
+                  _sendSms();
+                },
+              )
+            ])
+          : new AppBar(title: new Text("Invite Contacts")),
       body: !_isLoading
           ? Container(
               child: ListView.builder(
@@ -115,7 +114,8 @@ class _InviteScreenState extends State<InviteScreen> {
 
     SmsSender sender = new SmsSender();
     for (CustomContact contact in _uiCustomContacts) {
-      SmsMessage message = new SmsMessage(contact.contact.phones.elementAt(0).value, 'Hello flutter!');
+      SmsMessage message = new SmsMessage(
+          contact.contact.phones.elementAt(0).value, 'Hello flutter!');
       sender.sendSms(message);
       contact.isChecked = false;
     }
@@ -203,7 +203,7 @@ class _InviteScreenState extends State<InviteScreen> {
     });
   }
 
-  Future< Map<PermissionGroup, PermissionStatus> > getContactsPermission() =>
+  Future<Map<PermissionGroup, PermissionStatus>> getContactsPermission() =>
       PermissionHandler().requestPermissions([PermissionGroup.contacts]);
 }
 

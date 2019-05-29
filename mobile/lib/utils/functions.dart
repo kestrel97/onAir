@@ -14,8 +14,12 @@ void postAuthentication(String name, String uid, String identifier) async {
   await saveFirebaseUser(name, uid, identifier);
   LatLng location = PositionToLatLng(await getCurrentLocation());
   String fcm_token = await readFcmToken();
-  await updateUser(User(name: name, uid: uid, identifier: identifier,
-      fcm_token: fcm_token, location: location));
+  await updateUser(User(
+      name: name,
+      uid: uid,
+      identifier: identifier,
+      fcm_token: fcm_token,
+      location: location));
 }
 
 Position LatLngToPosition(LatLng latlng) {
@@ -35,8 +39,7 @@ void saveFirebaseUser(String name, String uid, String identifier) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(KEY_FIREBASE_UID, uid);
   prefs.setString(KEY_IDENTIFIER, identifier);
-  if (name != null)
-    prefs.setString(KEY_USER_NAME, name);
+  if (name != null) prefs.setString(KEY_USER_NAME, name);
 }
 
 Future<String> getUid() async {
@@ -46,9 +49,7 @@ Future<String> getUid() async {
 
 void updateUser(User user) async {
   const String endPoint = BASE_END_POINT + "/api/users/update";
-  print(user.toJson());
   var response = await Dio().post(endPoint, data: user.toJson());
-  print(response);
 }
 
 void saveFcmToken(String fcm_token) async {
@@ -62,21 +63,32 @@ Future<String> readFcmToken() async {
 }
 
 Future<String> getLocality(LatLng latlng) async {
-  List<Placemark> placemark = await Geolocator().placemarkFromPosition(await LatLngToPosition(latlng));
-  return placemark.first.name + " " + placemark.first.locality + " " + placemark.first.subLocality + " " + placemark.first.subAdministrativeArea;
+  List<Placemark> placemark =
+      await Geolocator().placemarkFromPosition(await LatLngToPosition(latlng));
+  return placemark.first.name +
+      " " +
+      placemark.first.locality +
+      " " +
+      placemark.first.subLocality +
+      " " +
+      placemark.first.subAdministrativeArea;
 }
 
 Future<Response> submitQuestion(String question, LatLng location) async {
   String uid = await getUid();
-  Question questionObj = Question(user: uid, location: location, question: question);
-  return await Dio().post(BASE_END_POINT + "/api/questions/create", data: questionObj.toJson());
+  Question questionObj =
+      Question(user: uid, location: location, question: question);
+  return await Dio().post(BASE_END_POINT + "/api/questions/create",
+      data: questionObj.toJson());
 }
 
 Future<List<Question>> getQuestionsByUserId() async {
   String uid = await getUid();
-  var response = await Dio().get(BASE_END_POINT + "/api/questions/byUid/" + uid);
+  var response =
+      await Dio().get(BASE_END_POINT + "/api/questions/byUid/" + uid);
   List<dynamic> list = response.data;
-  List<Question> questions = list.map((model)=> Question.fromJson(model)).toList();
+  List<Question> questions =
+      list.map((model) => Question.fromJson(model)).toList();
   return questions;
 }
 
@@ -84,17 +96,17 @@ Future<List<Question>> getRequestsByUserId() async {
   String uid = await getUid();
   var response = await Dio().get(BASE_END_POINT + "/api/requests/byUid/" + uid);
   List<dynamic> list = response.data;
-  List<Question> questions = list.map((model)=> Question.fromJson(model)).toList();
-  print(questions);
+  List<Question> questions =
+      list.map((model) => Question.fromJson(model)).toList();
   return questions;
 }
 
 Future<QuestionResponse> getResponseByQuestionId(question_id) async {
-  print(BASE_END_POINT + "/api/responses/byQuestionId/" + question_id);
   var response;
   try {
-    response = await Dio().get(BASE_END_POINT + "/api/responses/byQuestionId/" + question_id);
-  } on DioError catch(e) {
+    response = await Dio()
+        .get(BASE_END_POINT + "/api/responses/byQuestionId/" + question_id);
+  } on DioError catch (e) {
     return new QuestionResponse();
   }
   return QuestionResponse.fromJson(response.data);

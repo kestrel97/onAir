@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'question_details.dart';
 import 'models/question.dart';
 import 'request_details.dart';
+
 class QuestionsList extends StatefulWidget {
   QuestionsList({Key key, this.title, this.my_questions}) : super(key: key);
 
@@ -11,7 +12,8 @@ class QuestionsList extends StatefulWidget {
   bool my_questions;
 
   @override
-  _QuestionsListState createState() => _QuestionsListState(my_questions: my_questions);
+  _QuestionsListState createState() =>
+      _QuestionsListState(my_questions: my_questions);
 }
 
 class _QuestionsListState extends State<QuestionsList> {
@@ -29,7 +31,6 @@ class _QuestionsListState extends State<QuestionsList> {
     ListTile makeListTile(Question question) => ListTile(
           contentPadding:
               EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-
           title: Text(
             question.question,
             style: TextStyle(
@@ -37,14 +38,15 @@ class _QuestionsListState extends State<QuestionsList> {
                 fontWeight: FontWeight.bold,
                 fontSize: 20.0),
           ),
-
           trailing:
               Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
           onTap: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => (my_questions) ? QuestionDetails(question: question) : RequestDetails(question: question) ));
+                    builder: (context) => (my_questions)
+                        ? QuestionDetails(question: question)
+                        : RequestDetails(question: question)));
           },
         );
 
@@ -62,7 +64,8 @@ class _QuestionsListState extends State<QuestionsList> {
           title: Text(widget.title),
         ),
         body: FutureBuilder(
-            future: (my_questions) ? getQuestionsByUserId() : getRequestsByUserId(),
+            future:
+                (my_questions) ? getQuestionsByUserId() : getRequestsByUserId(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<Question> questions = snapshot.data;
@@ -89,8 +92,7 @@ class _QuestionsListState extends State<QuestionsList> {
                         ],
                       ),
                     ],
-                  )
-              );
+                  ));
             }));
   }
 }

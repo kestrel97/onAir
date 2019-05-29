@@ -24,11 +24,11 @@ class QuestionDetails extends StatelessWidget {
                 if (response.image_link == null) {
                   return AlertDialog(
                     title: Text("No content"),
-                    content: Text("No responses recieved for this question yet."),
+                    content:
+                        Text("No responses recieved for this question yet."),
                   );
                 }
 
-//                print(snapshot.data);
                 return Container(
                   padding: EdgeInsets.only(top: 8.0),
                   child: new Center(
