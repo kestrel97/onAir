@@ -13,15 +13,10 @@ router.get('/byQuestionId/:id', function (req, res, next) {
 
 router.post('/create', function(req, res) {
     singleUpload(req, res, function(err, some) {
-        console.log(req.body);
         if (err) {
-            console.log(err);
             return res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}] });
         }
         
-        console.log(req.file);
-
-
         if (req.file != undefined && req.file.location != undefined) {
             req.body.image_link = req.file.location;
         } else {
