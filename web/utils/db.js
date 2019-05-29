@@ -6,5 +6,6 @@ module.exports = {
     User: require('models/user.model'),
     Question: require('models/question.model'),
     Response: require('models/response.model'),
-    Invite: require('models/invite.model')
+    Invite: require('models/invite.model'),
+    Request: require('models/request.model')
 };

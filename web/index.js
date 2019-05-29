@@ -18,6 +18,7 @@ app.use(cors());
 app.use('/api/users', require('routes/user.route'));
 app.use('/api/questions', require('routes/question.route'));
 app.use('/api/responses', require('routes/response.route'));
+app.use('/api/requests', require('routes/request.route'));
 
 app.get('/', function (req, res) {
   res.send('Hello World!');

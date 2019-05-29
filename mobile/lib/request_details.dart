@@ -52,6 +52,7 @@ class RequestDetailsState extends State<RequestDetails> {
   }
 
   uploadFileFromDio(BuildContext context) async {
+    print("HERERERE");
     setState(() {
       _isLoading = true;
     });
@@ -168,7 +169,7 @@ class RequestDetailsState extends State<RequestDetails> {
                                   child: new Text('Deselect Image'),
                                 ),
                                 RaisedButton(
-                                  onPressed: uploadFileFromDio(context),
+                                  onPressed: () => uploadFileFromDio(context),
                                   child: new Text('Submit response'),
                                 )
                               ],

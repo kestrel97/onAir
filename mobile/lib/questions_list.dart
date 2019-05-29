@@ -62,7 +62,7 @@ class _QuestionsListState extends State<QuestionsList> {
           title: Text(widget.title),
         ),
         body: FutureBuilder(
-            future: (my_questions) ? getQuestionsByUserId() : getQuestionsByUserId(),
+            future: (my_questions) ? getQuestionsByUserId() : getRequestsByUserId(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<Question> questions = snapshot.data;

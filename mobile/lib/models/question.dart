@@ -23,7 +23,7 @@ class Question {
         id: parsedJson['_id'],
         user: parsedJson['user'],
         question : parsedJson['question'],
-        location : LatLng(parsedJson['location']['coordinates'][1], parsedJson['location']['coordinates'][0])
+        location : (parsedJson['location'] != null) ? LatLng(parsedJson['location']['coordinates'][1], parsedJson['location']['coordinates'][0]) : null
     );
   }
 }

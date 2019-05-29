@@ -28,7 +28,8 @@ async function update(userParam) {
 
         try {
             await user.save();
-        } catch {
+        } catch (e) {
+            console.log(e);
             return ( { success: false, message: constants.USER_REGISTRATION_FAILED } )
         }
 

@@ -46,7 +46,9 @@ Future<String> getUid() async {
 
 void updateUser(User user) async {
   const String endPoint = BASE_END_POINT + "/api/users/update";
+  print(user.toJson());
   var response = await Dio().post(endPoint, data: user.toJson());
+  print(response);
 }
 
 void saveFcmToken(String fcm_token) async {
@@ -75,6 +77,15 @@ Future<List<Question>> getQuestionsByUserId() async {
   var response = await Dio().get(BASE_END_POINT + "/api/questions/byUid/" + uid);
   List<dynamic> list = response.data;
   List<Question> questions = list.map((model)=> Question.fromJson(model)).toList();
+  return questions;
+}
+
+Future<List<Question>> getRequestsByUserId() async {
+  String uid = await getUid();
+  var response = await Dio().get(BASE_END_POINT + "/api/requests/byUid/" + uid);
+  List<dynamic> list = response.data;
+  List<Question> questions = list.map((model)=> Question.fromJson(model)).toList();
+  print(questions);
   return questions;
 }
 
