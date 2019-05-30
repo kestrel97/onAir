@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-var dateFormat = require('dateformat');
+
 @Component({
   selector: 'app-day-history',
   templateUrl: './day-history.component.html',
@@ -11,8 +11,8 @@ export class DayHistoryComponent implements OnInit {
 
   ngOnInit() {
 
-    let now = new Date();
-    dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+    // let now = new Date();
+    // dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
   }
 
 }
