@@ -53,10 +53,14 @@ class Splash extends StatelessWidget {
     return new MaterialApp(
       title: 'On Air',
       theme: new ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
+//        primaryColor: Color(0xFFffa726),
+//        accentColor: Color(0xFFffd95b),
+      primarySwatch: Colors.grey,
+
       ),
       home: SplashScreen(
-          imagePath: 'assets/onair.jpg',
+          imagePath: 'assets/onair.png',
           afterSplash: afterSplash,
           duringSplash: duringSplash,
           duration: 500),

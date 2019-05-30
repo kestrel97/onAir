@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen>
       _afterSplash(context);
     });
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         body: FadeTransition(
             opacity: _animation,
             child: Center(
