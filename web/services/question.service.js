@@ -4,6 +4,7 @@ const Question = db.Question;
 const User = db.User;
 const Request = db.Request;
 var mongoose = require('mongoose');
+var fcmService = require('services/fcm.service');
 
 async function create(userParam) {
     if (userParam.location == undefined || userParam.location.coordinates == undefined) {
@@ -35,13 +36,13 @@ async function create(userParam) {
     })
     
     for (var i = 0; i<users.length; i++) {
+        if (users[i].fcm_token != null) {
+            console.log(users[i].fcm_token);
+            fcmService.sendNotification(users[i].fcm_token);
+        }
         var request = new Request({ user: users[i]._id, question_id: questionId, question: question.question })
-
-        console.log(request);
         await request.save();
     }
-
-    console.log(users);
 
     return ( { success: true, message: constants.QUESTION_CREATED_SUCCESSFULLY } )
 }
@@ -55,7 +56,7 @@ async function getRecentQuestions(offset) {
 }
 
 async function getQuestionCount() {
-    return Question.count();
+    return Question.countDocuments();
 }
 
 module.exports = {
