@@ -1,3 +1,4 @@
+import 'package:OnAir/ui/question_card.dart';
 import 'package:OnAir/utils/functions.dart';
 
 import 'package:flutter/material.dart';
@@ -28,37 +29,6 @@ class _QuestionsListState extends State<QuestionsList> {
 
   @override
   Widget build(BuildContext context) {
-    ListTile makeListTile(Question question) => ListTile(
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-          title: Text(
-            question.question,
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0),
-          ),
-          trailing:
-              Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => (my_questions)
-                        ? QuestionDetails(question: question)
-                        : RequestDetails(question: question)));
-          },
-        );
-
-    Card makeCard(Question question) => Card(
-          elevation: 8.0,
-          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-          child: Container(
-            decoration: BoxDecoration(color: Color(0xFF0069C0)),
-            child: makeListTile(question),
-          ),
-        );
-
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
@@ -75,7 +45,8 @@ class _QuestionsListState extends State<QuestionsList> {
                     shrinkWrap: true,
                     itemCount: questions.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return makeCard(questions[index]);
+                      return (my_questions) ? QuestionCard(question: questions[index], is_response: false) : QuestionCard(question: questions[index], is_response: true);
+//                      return makeCard(questions[index]);
                     },
                   ),
                 );

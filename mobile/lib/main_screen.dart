@@ -29,7 +29,7 @@ class MainScreenState extends State<MainScreen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
+              decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
               accountName: FutureBuilder<String>(
                   future: getStringFromSharedPreferences(KEY_USER_NAME),
                   initialData: '',
@@ -149,27 +149,26 @@ class _MyHomePageState extends State<MyHomePage> {
             elevation: 8.0,
             margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
             child: Container(
-              decoration: BoxDecoration(color: Color(0xFF0069C0)),
+              decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
               child: ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-                title: Text(
-                  question.question,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0),
-                ),
-                trailing: Icon(Icons.keyboard_arrow_right,
-                    color: Colors.white, size: 30.0),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              QuestionDetails(question: question)));
-                },
-              ),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+                  title: Text(
+                    question.question,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+
+                  trailing: Icon(Icons.keyboard_arrow_right,
+                      color: Colors.white, size: 30.0),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                QuestionDetails(question: question)));
+                  }),
             ),
           );
         });

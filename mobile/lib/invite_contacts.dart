@@ -98,7 +98,7 @@ class _InviteScreenState extends State<InviteScreen> {
               child: CircularProgressIndicator(),
             ),
       floatingActionButton: new FloatingActionButton.extended(
-        backgroundColor: floatingButtonColor,
+//        backgroundColor: floatingButtonColor,
         onPressed: _onSubmit,
         icon: Icon(icon),
         label: Text(floatingButtonLabel),

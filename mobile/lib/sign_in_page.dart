@@ -73,11 +73,7 @@ class _GoogleSignInSectionState extends State<_GoogleSignInSection> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Container(
-          child: const Text('Test sign in with Google'),
-          padding: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-        ),
+        Padding(padding: EdgeInsets.symmetric(vertical: 15.0),),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           alignment: Alignment.center,
@@ -85,21 +81,9 @@ class _GoogleSignInSectionState extends State<_GoogleSignInSection> {
             onPressed: () async {
               _signInWithGoogle();
             },
-            child: const Text('Sign in with Google'),
+            child: const Text('Sign in with Google Account'),
           ),
         ),
-        Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            _success == null
-                ? ''
-                : (_success
-                    ? 'Successfully signed in, uid: ' + _userID
-                    : 'Sign in failed'),
-            style: TextStyle(color: Colors.red),
-          ),
-        )
       ],
     );
   }
@@ -112,6 +96,8 @@ class _GoogleSignInSectionState extends State<_GoogleSignInSection> {
 
   // Example code of how to sign in with google.
   void _signInWithGoogle() async {
+    if (!await checkGps(context)) return;
+
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
@@ -167,20 +153,18 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Container(
-          child: const Text('Test sign in with phone number'),
-          padding: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-        ),
-        TextFormField(
-          controller: _phoneNumberController,
-          decoration:
-              InputDecoration(labelText: 'Phone number (+x xxx-xxx-xxxx)'),
-          validator: (String value) {
-            if (value.isEmpty) {
-              return 'Phone number (+x xxx-xxx-xxxx)';
-            }
-          },
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: TextFormField(
+            controller: _phoneNumberController,
+            decoration:
+                InputDecoration(labelText: 'Phone number (+x xxx-xxx-xxxx)'),
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Phone number (+x xxx-xxx-xxxx)';
+              }
+            },
+          ),
         ),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -192,9 +176,12 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
             child: const Text('Verify phone number'),
           ),
         ),
-        TextField(
-          controller: _smsController,
-          decoration: InputDecoration(labelText: 'Verification code'),
+        Padding(
+          padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+          child: TextField(
+            controller: _smsController,
+            decoration: InputDecoration(labelText: 'Verification code'),
+          ),
         ),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -267,6 +254,8 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
 
   // Example code of how to sign in with phone.
   void _signInWithPhoneNumber() async {
+    if (!await checkGps(context)) return;
+
     final AuthCredential credential = PhoneAuthProvider.getCredential(
       verificationId: _verificationId,
       smsCode: _smsController.text,
