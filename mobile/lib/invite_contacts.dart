@@ -115,7 +115,7 @@ class _InviteScreenState extends State<InviteScreen> {
     SmsSender sender = new SmsSender();
     for (CustomContact contact in _uiCustomContacts) {
       SmsMessage message = new SmsMessage(
-          contact.contact.phones.elementAt(0).value, 'Hello flutter!');
+          contact.contact.phones.elementAt(0).value, 'Download our app now from: http://onair.timetable.ml/app.apk');
       sender.sendSms(message);
       contact.isChecked = false;
     }

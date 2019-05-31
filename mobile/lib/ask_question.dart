@@ -125,18 +125,21 @@ class AskQuestionState extends State<AskQuestion> {
                     ),
                   ),
       ),
-      floatingActionButton: (!_isLocationSelected && _tappedPoints.length != 0)
-          ? new FloatingActionButton.extended(
-              backgroundColor: Colors.blue,
-              onPressed: (() {
-                setState(() {
-                  _isLocationSelected = true;
-                });
-              }),
-              icon: Icon(Icons.location_on),
-              label: Text("Select Location"),
-            )
-          : null,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 12.0),
+        child: (!_isLocationSelected && _tappedPoints.length != 0)
+            ? new FloatingActionButton.extended(
+//              backgroundColor: Colors.blue,
+                onPressed: (() {
+                  setState(() {
+                    _isLocationSelected = true;
+                  });
+                }),
+                icon: Icon(Icons.location_on),
+                label: Text("Select Location"),
+              )
+            : null,
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

@@ -26,8 +26,7 @@
     "serverless-azure-functions": "^0.7.0",
     "angular2-flash-messages": "^3.0.1",
     "@angular/router": "^6.1.0",
-    "serverless-http": "^2.0.1",
-    "dateformat": "3.0.3"
+    "serverless-http": "^2.0.1"
   },
   "devDependencies": {
     "serverless-offline": "^4.9.4"
