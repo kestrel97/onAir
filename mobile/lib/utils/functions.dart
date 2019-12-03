@@ -51,6 +51,7 @@ Future<String> getUid() async {
 
 void updateUser(User user) async {
   const String endPoint = BASE_END_POINT + "/api/users/update";
+  print(endPoint);
   var response = await Dio().post(endPoint, data: user.toJson());
 }
 

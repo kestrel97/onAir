@@ -105,14 +105,13 @@ class _GoogleSignInSectionState extends State<_GoogleSignInSection> {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    final FirebaseUser user = await _auth.signInWithCredential(credential);
-    assert(user.email != null);
-    assert(user.displayName != null);
+    final AuthResult authResult = await _auth.signInWithCredential(credential);
+    final FirebaseUser user = authResult.user;
     assert(!user.isAnonymous);
-    assert(await user.getIdToken() != null);
+  assert(await user.getIdToken() != null);
 
-    final FirebaseUser currentUser = await _auth.currentUser();
-    assert(user.uid == currentUser.uid);
+  final FirebaseUser currentUser = await _auth.currentUser();
+  assert(user.uid == currentUser.uid);
 
     if (user != null)
       await postAuthentication(user.providerData[0].displayName, user.uid,
@@ -219,7 +218,7 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
       });
       Navigator.of(context).pushReplacement(
           CupertinoPageRoute(builder: (BuildContext context) => MainScreen()));
-    };
+    } as PhoneVerificationCompleted;
 
     final PhoneVerificationFailed verificationFailed =
         (AuthException authException) {
@@ -260,7 +259,8 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
       verificationId: _verificationId,
       smsCode: _smsController.text,
     );
-    final FirebaseUser user = await _auth.signInWithCredential(credential);
+    final AuthResult authResult = await _auth.signInWithCredential(credential);
+    final FirebaseUser user = authResult.user;
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
 
