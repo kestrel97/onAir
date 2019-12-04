@@ -14,6 +14,33 @@ app.use(helmet());
 const cors = require('cors');
 app.use(cors());
 
+function logResponseBody(req, res, next) {
+  var oldWrite = res.write,
+      oldEnd = res.end;
+
+  var chunks = [];
+
+  res.write = function (chunk) {
+    chunks.push(chunk);
+
+    oldWrite.apply(res, arguments);
+  };
+
+  res.end = function (chunk) {
+    if (chunk)
+      chunks.push(chunk);
+
+    var body = Buffer.concat(chunks).toString('utf8');
+    console.log(req.path, body);
+
+    oldEnd.apply(res, arguments);
+  };
+
+  next();
+}
+
+app.use(logResponseBody);
+
 // api routes
 app.use('/api/users', require('routes/user.route'));
 app.use('/api/questions', require('routes/question.route'));

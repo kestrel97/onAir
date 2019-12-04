@@ -140,9 +140,9 @@ class _PhoneSignInSection extends StatefulWidget {
 
 class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
   final TextEditingController _phoneNumberController =
-      TextEditingController(text: "+923322218872");
+      TextEditingController(text: "+923112810458");
   final TextEditingController _smsController =
-      TextEditingController(text: "112233");
+      TextEditingController(text: "13365");
 
   String _message = '';
   String _verificationId;

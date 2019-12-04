@@ -33,8 +33,9 @@ LatLng PositionToLatLng(Position position) {
 }
 
 Future<Position> getCurrentLocation() async {
-  return await Geolocator()
-      .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  // return await Geolocator()
+  //     .getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
+  return Position(longitude: 67.264, latitude: 24.857);
 }
 
 void saveFirebaseUser(String name, String uid, String identifier) async {
