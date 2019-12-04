@@ -210,7 +210,7 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
       _message = '';
     });
     final PhoneVerificationCompleted verificationCompleted =
-        (FirebaseUser user) async {
+        (user) async {
       await postAuthentication("", user.uid, user.providerData[0].phoneNumber);
 
       setState(() {
@@ -259,24 +259,34 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
       verificationId: _verificationId,
       smsCode: _smsController.text,
     );
-    final AuthResult authResult = await _auth.signInWithCredential(credential);
-    final FirebaseUser user = authResult.user;
-    final FirebaseUser currentUser = await _auth.currentUser();
-    assert(user.uid == currentUser.uid);
+    
+    try{
+      final AuthResult authResult = await _auth.signInWithCredential(credential);
+      final FirebaseUser user = authResult.user;
+      final FirebaseUser currentUser = await _auth.currentUser();
+      assert(user.uid == currentUser.uid);
 
-    if (user != null) {
-      await postAuthentication("", user.uid, user.providerData[0].phoneNumber);
-    }
-
-    setState(() {
       if (user != null) {
-        _message = 'Successfully signed in, uid: ' + user.uid;
-      } else {
-        _message = 'Sign in failed';
+        await postAuthentication("", user.uid, user.providerData[0].phoneNumber);
       }
-    });
 
-    Navigator.of(context).pushReplacement(
-        CupertinoPageRoute(builder: (BuildContext context) => MainScreen()));
+      setState(() {
+        if (user != null) {
+          _message = 'Successfully signed in, uid: ' + user.uid;
+        } else {
+          _message = 'Sign in failed';
+        }
+      });
+
+      Navigator.of(context).pushReplacement(
+          CupertinoPageRoute(builder: (BuildContext context) => MainScreen()));
+    }
+    catch (Exception ){
+        setState(() {
+        _message = 'Verification Code is wrong';
+      });
+    } 
+    
   }
+
 }
