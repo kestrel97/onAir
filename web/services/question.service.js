@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 var fcmService = require('services/fcm.service');
 
 async function create(userParam) {
+    console.log("question response goes here",userParam, "to here///")
     if (userParam.location == undefined || userParam.location.coordinates == undefined) {
         return ( { success: false, message: constants.QUESTION_CREATION_FAILED } );
     }
@@ -23,26 +24,16 @@ async function create(userParam) {
     }
 
     // Send requests
-    // const users = await User.find({
-    //     location: {
-    //         $nearSphere: {
-    //         $geometry: {
-    //             type: 'Point',
-    //             coordinates: userParam.location.coordinates
-    //         },
-    //         $maxDistance: 1000 // within 1 KM
-    //         }
-    //     }
-    // })
+    const users = await User.find()
     
-    // for (var i = 0; i<users.length; i++) {
-    //     if (users[i].fcm_token != null) {
-    //         console.log(users[i].fcm_token);
-    //         fcmService.sendNotification(users[i].fcm_token);
-    //     }
-    //     var request = new Request({ user: users[i]._id, question_id: questionId, question: question.question })
-    //     await request.save();
-    // }
+    for (var i = 0; i<users.length; i++) {
+        // if (users[i].fcm_token != null) {
+        //     console.log(users[i].fcm_token);
+        //     fcmService.sendNotification(users[i].fcm_token);
+        // }
+        var request = new Request({ user: users[i]._id, question_id: questionId, question: question.question })
+        await request.save();
+    }
 
     return ( { success: true, message: constants.QUESTION_CREATED_SUCCESSFULLY } )
 }

@@ -141,7 +141,7 @@ class RequestDetailsState extends State<RequestDetails> {
                                 maxLines: null,
                                 minLines: 5,
                                 style: new TextStyle(
-                                    fontSize: 16.0, color: Colors.black),
+                                    fontSize: 16.0, color: Colors.white),
                               ),
                             ),
                             (_image == null)

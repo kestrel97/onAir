@@ -44,7 +44,7 @@ class QuestionDetails extends StatelessWidget {
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20.0, vertical: 10.0),
                             title: Text(
-                              question.question,
+                              "Q: "+question.question,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -52,20 +52,20 @@ class QuestionDetails extends StatelessWidget {
                           ),
                         ),
                       ),
-                      new Card(
-                        elevation: 8.0,
-                        margin: new EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 6.0),
-                        child: Container(
-                          decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
-                          child: new ListTile(
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 10.0),
-                              title: CachedNetworkImage(
-                                imageUrl: response.image_link,
-                              )),
-                        ),
-                      ),
+                      // new Card(
+                      //   elevation: 8.0,
+                      //   margin: new EdgeInsets.symmetric(
+                      //       horizontal: 10.0, vertical: 6.0),
+                      //   child: Container(
+                      //     decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+                      //     child: new ListTile(
+                      //         contentPadding: EdgeInsets.symmetric(
+                      //             horizontal: 20.0, vertical: 10.0),
+                      //         title: CachedNetworkImage(
+                      //           imageUrl: response.image_link,
+                      //         )),
+                      //   ),
+                      // ),
                       new Card(
                         elevation: 8.0,
                         margin: new EdgeInsets.symmetric(
@@ -76,7 +76,7 @@ class QuestionDetails extends StatelessWidget {
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20.0, vertical: 10.0),
                             title: Text(
-                              response.response,
+                              "Ans: "+response.response,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),

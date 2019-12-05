@@ -1,27 +1,14 @@
 const multer = require('multer');
 const multerS3 = require('multer-s3');
-const aws = require('aws-sdk');
 const mime = require('mime');
 
-aws.config.update({
-    secretAccessKey: "/4IXXs/h2zO417PnxuKzEPakRv4ijxb2l9s5XEqn",
-    accessKeyId: "AKIAXVFMVVXL7QLBIHWD",
-    region: 'us-east-1'
-});
-
-const s3 = new aws.S3();
-
 const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: 'on-air-images',
-    acl: 'public-read',
-    contentType: multerS3.AUTO_CONTENT_TYPE,
-    metadata: function (req, file, cb) {
-      cb(null, {fieldName: file.fieldname});
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, '/home/hesh/on-air-images')
     },
-    key: function (req, file, cb) {
-      cb(null, Date.now().toString() + '.' + mime.getExtension(file.mimetype));
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + '.' + mime.getExtension(file.mimetype));
     }
   }),
   fileFilter: function (req, file, callback) {
@@ -35,5 +22,5 @@ const upload = multer({
       fileSize: 1024 * 1024 * 10
   }
 })
-  
+
   module.exports = upload;

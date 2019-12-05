@@ -3,6 +3,7 @@ const db = require('utils/db');
 const User = db.User;
 
 async function update(userParam) {
+    console.log("update response goes here",userParam, "to here///")
 
     if (! userParam.uid) {
         return ( { success: false, message: constants.USER_UPDATE_FAILED } )

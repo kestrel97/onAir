@@ -81,7 +81,7 @@ class AskQuestionState extends State<AskQuestion> {
                             style: new TextStyle(
                                 fontSize: 16.0,
                                 // height: 2.0,
-                                color: Colors.black),
+                                color: Colors.white),
 //                contentPadding: const EdgeInsets.symmetric(vertical: 40.0),
                           ),
                         ),
