@@ -48,7 +48,8 @@ class SignInPageState extends State<SignInPage> {
           scrollDirection: Axis.vertical,
           children: <Widget>[
             _GoogleSignInSection(),
-            _PhoneSignInSection(Scaffold.of(context)),
+            // _PhoneSignInSection(Scaffold.of(context)),
+            _LocalSignInSection(Scaffold.of(context)),
           ],
         );
       }),
@@ -73,7 +74,9 @@ class _GoogleSignInSectionState extends State<_GoogleSignInSection> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Padding(padding: EdgeInsets.symmetric(vertical: 15.0),),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 15.0),
+        ),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           alignment: Alignment.center,
@@ -108,10 +111,10 @@ class _GoogleSignInSectionState extends State<_GoogleSignInSection> {
     final AuthResult authResult = await _auth.signInWithCredential(credential);
     final FirebaseUser user = authResult.user;
     assert(!user.isAnonymous);
-  assert(await user.getIdToken() != null);
+    assert(await user.getIdToken() != null);
 
-  final FirebaseUser currentUser = await _auth.currentUser();
-  assert(user.uid == currentUser.uid);
+    final FirebaseUser currentUser = await _auth.currentUser();
+    assert(user.uid == currentUser.uid);
 
     if (user != null)
       await postAuthentication(user.providerData[0].displayName, user.uid,
@@ -209,8 +212,7 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
     setState(() {
       _message = '';
     });
-    final PhoneVerificationCompleted verificationCompleted =
-        (user) async {
+    final PhoneVerificationCompleted verificationCompleted = (user) async {
       await postAuthentication("", user.uid, user.providerData[0].phoneNumber);
 
       setState(() {
@@ -259,15 +261,17 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
       verificationId: _verificationId,
       smsCode: _smsController.text,
     );
-    
-    try{
-      final AuthResult authResult = await _auth.signInWithCredential(credential);
+
+    try {
+      final AuthResult authResult =
+          await _auth.signInWithCredential(credential);
       final FirebaseUser user = authResult.user;
       final FirebaseUser currentUser = await _auth.currentUser();
       assert(user.uid == currentUser.uid);
 
       if (user != null) {
-        await postAuthentication("", user.uid, user.providerData[0].phoneNumber);
+        await postAuthentication(
+            "", user.uid, user.providerData[0].phoneNumber);
       }
 
       setState(() {
@@ -280,13 +284,91 @@ class _PhoneSignInSectionState extends State<_PhoneSignInSection> {
 
       Navigator.of(context).pushReplacement(
           CupertinoPageRoute(builder: (BuildContext context) => MainScreen()));
-    }
-    catch (Exception ){
-        setState(() {
+    } catch (Exception) {
+      setState(() {
         _message = 'Verification Code is wrong';
       });
-    } 
-    
+    }
   }
+}
 
+class _LocalSignInSection extends StatefulWidget {
+  _LocalSignInSection(this._scaffold);
+
+  final ScaffoldState _scaffold;
+  @override
+  State<StatefulWidget> createState() => _LocalSignInSectionState();
+}
+
+class _LocalSignInSectionState extends State<_LocalSignInSection> {
+  String _message = "";
+  bool passwordVisible = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: TextFormField(
+            // controller: _phoneNumberController,
+            decoration: InputDecoration(
+              labelText: 'Name',
+              hintText: 'Enter Your Name'
+            ),
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Name';
+              }
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+          child: TextField(
+            keyboardType: TextInputType.text,
+            //  controller: _userPasswordController,
+            obscureText: passwordVisible, //This will obscure text dynamically
+            decoration: InputDecoration(
+              labelText: 'Password',
+              hintText: 'Enter your password',
+              // Here is key idea
+              suffixIcon: IconButton(
+                icon: Icon(
+                  // Based on passwordVisible state choose the icon
+                  passwordVisible ? Icons.visibility : Icons.visibility_off,
+                  color: Theme.of(context).primaryColorDark,
+                ),
+                onPressed: () {
+                  // Update the state i.e. toogle the state of passwordVisible variable
+                  setState(() {
+                    passwordVisible = !passwordVisible;
+                  });
+                },
+              ),
+            ),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          alignment: Alignment.center,
+          child: RaisedButton(
+            onPressed: () async {
+              // _signInWithPhoneNumber();
+            },
+            child: const Text('Sign In'),
+          ),
+        ),
+        Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            _message,
+            style: TextStyle(color: Colors.red),
+          ),
+        )
+      ],
+    );
+  }
 }

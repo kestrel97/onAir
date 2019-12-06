@@ -14,6 +14,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'invite_contacts.dart';
 import 'models/question.dart';
 import 'utils/constants.dart';
+import 'sign_up.dart';
+import 'services/authentication.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class MainScreen extends StatefulWidget {
   @override
@@ -114,7 +118,7 @@ class MainScreenState extends State<MainScreen> {
     _googleSignIn.signOut();
 
     Navigator.of(context).pushReplacement(
-        CupertinoPageRoute(builder: (BuildContext context) => SignInPage()));
+        CupertinoPageRoute(builder: (BuildContext context) => LoginSignupPage()));
   }
 }
 

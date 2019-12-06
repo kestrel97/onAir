@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     _id: { type: String },
     name: { type: String },
+    password: {type: String},
     uid: { type: String, unique: true, required: true }, // firebase authentication
     identifier: { type: String, required: true }, // email or phone
     fcm_token: { type: String, required: true }, // firebase cloud messaging

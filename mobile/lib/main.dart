@@ -1,11 +1,14 @@
 import 'package:OnAir/utils/functions.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'ui/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
-import 'sign_in_page.dart';
+// import 'sign_in_page.dart';
+// import 'sign_up.dart';
+import 'root_page.dart';
+import 'services/authentication.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'main_screen.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +30,7 @@ class Splash extends StatelessWidget {
     if (isLoggedIn != null && isLoggedIn) {
       nextWidget = MainScreen();
     } else {
-      nextWidget = SignInPage();
+      nextWidget = RootPage(auth: new Auth());
     }
 
     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
@@ -52,6 +55,7 @@ class Splash extends StatelessWidget {
 
     return new MaterialApp(
       title: 'On Air',
+      debugShowCheckedModeBanner: false,
       theme: new ThemeData(
         brightness: Brightness.dark,
 //        primaryColor: Color(0xFFffa726),
