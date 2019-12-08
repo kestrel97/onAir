@@ -1,3 +1,4 @@
+import 'package:OnAir/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'models/response.dart';
 import 'models/question.dart';
@@ -39,12 +40,13 @@ class QuestionDetails extends StatelessWidget {
                         margin: new EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 6.0),
                         child: Container(
-                          decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(64, 75, 96, .9)),
                           child: new ListTile(
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20.0, vertical: 10.0),
                             title: Text(
-                              "Q: "+question.question,
+                              "Q: " + question.question,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -57,13 +59,15 @@ class QuestionDetails extends StatelessWidget {
                       //   margin: new EdgeInsets.symmetric(
                       //       horizontal: 10.0, vertical: 6.0),
                       //   child: Container(
-                      //     decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
-                      //     child: new ListTile(
-                      //         contentPadding: EdgeInsets.symmetric(
-                      //             horizontal: 20.0, vertical: 10.0),
-                      //         title: CachedNetworkImage(
-                      //           imageUrl: response.image_link,
-                      //         )),
+                      //     child: 
+                      //         Image.network(
+                      //           BASE_END_POINT + "/" + response.image_link,
+                      //           width: 600.0,
+                      //           height: 240.0,
+                      //           fit: BoxFit.cover,
+                      //         ),
+                          
+                          
                       //   ),
                       // ),
                       new Card(
@@ -71,12 +75,13 @@ class QuestionDetails extends StatelessWidget {
                         margin: new EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 6.0),
                         child: Container(
-                          decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(64, 75, 96, .9)),
                           child: new ListTile(
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20.0, vertical: 10.0),
                             title: Text(
-                              "Ans: "+response.response,
+                              "Ans: " + response.response,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),

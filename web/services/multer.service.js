@@ -5,10 +5,10 @@ const mime = require('mime');
 const upload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, '/home/hesh/on-air-images')
+      cb(null, 'public/')
     },
     filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + '.' + mime.getExtension(file.mimetype));
+      cb(null, file.fieldname + '-' + Date.now() + '.jpg');
     }
   }),
   fileFilter: function (req, file, callback) {

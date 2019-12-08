@@ -24,8 +24,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   String _email;
   String _password;
+  String _name = "";
   String _errorMessage;
   final emailController = TextEditingController();
+  final nameController = TextEditingController();
   bool _isLoginForm;
   bool _isLoading;
   bool passwordVisible = true;
@@ -291,6 +293,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             shrinkWrap: true,
             children: <Widget>[
               showLogo(),
+              if (!_isLoginForm) showNameInput(),
               showEmailInput(),
               showPasswordInput(),
               if (_isLoginForm) showForgetPassowrd(),
@@ -334,9 +337,28 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
+  Widget showNameInput() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
+      child: new TextFormField(
+        controller: nameController,
+        maxLines: 1,
+        keyboardType: TextInputType.text,
+        autofocus: false,
+        decoration: new InputDecoration(
+            hintText: 'Username',
+            icon: new Icon(
+              Icons.person,
+              color: Colors.grey,
+            )),
+        validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
+        onSaved: (value) => _name = value.trim(),
+      ),
+    );
+  }
   Widget showEmailInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+      padding: _isLoginForm? const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0) : const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: new TextFormField(
         controller: emailController,
         maxLines: 1,
@@ -398,7 +420,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showPrimaryButton() {
     return new Padding(
-        padding: _isLoginForm? EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0) : EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
+        padding: _isLoginForm? EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0) : EdgeInsets.fromLTRB(0.0, 35.0, 0.0, 0.0),
         child: SizedBox(
           height: 40.0,
           child: new RaisedButton(

@@ -39,7 +39,9 @@ function logResponseBody(req, res, next) {
   next();
 }
 
-app.use(logResponseBody);
+// app.use(logResponseBody);
+
+app.use(express.static('public'));
 
 // api routes
 app.use('/api/users', require('routes/user.route'));
